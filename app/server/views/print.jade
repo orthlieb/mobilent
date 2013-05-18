@@ -1,0 +1,24 @@
+
+extends layout
+
+block content
+	include navbar-loggedin
+	div.container(style='margin:60px 20px')
+		table.table.table-bordered.table-striped
+			thead
+				tr
+					th(style='width:40px') #
+					th(style='width:120px') Name
+					th(style='width:160px') Location
+					th(style='width:160px') Company
+					th(style='width:120px') Username
+					th Account Created
+			tbody
+			- for (var i = 0; i < accts.length; i++)
+				tr
+					td= i+1
+					td= accts[i].name
+					td= accts[i].country
+					td= accts[i].company
+					td= accts[i].user
+					td= accts[i].date

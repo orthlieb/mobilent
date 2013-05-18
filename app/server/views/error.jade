@@ -1,0 +1,14 @@
+
+extends layout
+
+block content
+	include navbar	
+	center
+		div.alert.alert-error
+			h1 Error #{number}
+			p #{message}
+		br
+		img(alt='Tumbeasts ate my server', src='../img/tbservers.png', width='50%')
+
+
+
