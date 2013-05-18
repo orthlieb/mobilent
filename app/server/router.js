@@ -3,26 +3,32 @@ var CT = require('./modules/country-list');
 var EM = require('./modules/email-dispatcher');
 var _ = require('./vendor/underscore-min');
 
-var handlers = require('./handlers');
-var local = handlers.local;
-var remote = handlers.remote;
-var api = local;	// Use local APIs for UI, that is API server and UI server are on the same box.
+
+var handlers = [
+	require('./api/reflect'),
+	require('./api/users'),
+	require('./api/user')
+];
+
+var api = {};
+for (var i = 0; i < handlers.length; i++) {
+	api[handlers[i].name] = handlers[i].local;
+}
 
 module.exports = function(app) {
 	// Create the remote API handlers with the corresponding paths and methods.
-	console.log("*** Creating remote handlers");
-	for (var i in remote) {
-		if (remote.hasOwnProperty(i)) {
-			var path = '/api/' + i;
-			var methods = remote[i];
-			for (method in methods) {
-				if (methods.hasOwnProperty(method)) {
-					console.log("Registering " + path + ": " + method);
-					app[method](path, methods[method]);
-				}
-			}
+	debugger;
+	console.log("ROUTER: Creating remote handlers");
+	for (var i = 0; i < handlers.length; i++) {
+		var name = handlers[i].name;	// E.g. user
+		var remote = handlers[i].remote;	// Array
+		for (var j = 0; j < remote.length; j++) {
+			var path = '/api/' + name + '/' + remote[j].name;
+			var method = remote[j].method;	
+			console.log("ROUTER: registering " + method + ": " + path);
+			app[method](path, remote[j].handler);
 		}
-	}
+	}		
 
 	app.get('/', function(req, res){
 		console.log("GET / {" + JSON.stringify(req.param) + "}");

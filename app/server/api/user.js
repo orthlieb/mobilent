@@ -56,13 +56,14 @@ function autoLogin(user, pass, callback)
 	});
 }
 
-function manualLogin(user, pass, callback)
+function loginUser(data, callback)
 {
-	accounts.findOne({ user: user }, function(e, o) {
+	accounts.findOne({ user: data.user }, function(e, o) {
+		debugger;
 		if (!o) {
 			callback('user-not-found');
 		} else {
-			if (validatePassword(pass, o.pass)) {
+			if (validatePassword(data.pass, o.pass)) {
 				callback(null, o);
 			} else {
 				callback('invalid-password');
@@ -172,57 +173,83 @@ function deleteUser(conditions, callback) {
 
 exports.name = "user";
 exports.local = {
-	get: readUser,
-	put: createUser,
-	post: updateUser,
+	read: readUser,
+	create: createUser,
+	update: updateUser,
 	delete: deleteUser,
 	autoLogin: autoLogin,
-	manualLogin: manualLogin,
+	login: loginUser,
 	validateResetLink: validateResetLink
 };
 
-exports.remote = {
-	get: function (req, res) {
-		console.log("REMOTE API user.get " + JSON.stringify(req.query));
-		readUser(req.query, function(err, user) {
-			debugger;
-			if (!err && user) {
-				res.json(200, user);	// Ok
-			} else {
-				res.json(404, { error: err });
-			}
-		});
-	},
-	put: function (req, res) {	// Create
-		console.log("REMOTE API user.put " + JSON.stringify(req.body));
-		createUser(req.body, function(err, user) {
-			if (!err) {
-				res.json(201, user);	// Created
-			} else {
-				res.json(400, { error: err });
-			}
-		});
-	},
-	post: function (req, res) {	// Create or update
-		console.log("REMOTE API user.post " + JSON.stringify(req.body));
-		updateUser(req.body, function(err, user) {
-			if (!err) {
-				res.json(200, user);	// Updated
-			} else {
-				res.json(400, { error: err });
-			}
-		});
-	},
-	delete: function (req, res) { 
-		console.log("REMOTE API user.delete " + JSON.stringify(req.query));
-		deleteUser(req.query, function (err, user) {
-			if (!err) {
-				res.json(200, user);	// Deleted
-			} else {
-				res.json(400, { error: err });
-			}
-		});
+exports.remote = [
+	{
+		name: 'login.json', 
+		method: 'post', 
+		handler: function (req, res) {
+			console.log("REMOTE API user.login " + JSON.stringify(req.body));
+			loginUser(req.body, function(err, user) {
+				if (!err) {
+					res.json(200, user);	// Ok
+				} else {
+					res.json(400, { error: err });
+				}
+			});
+		}
+	}, {
+		name: 'read.json', 
+		method: 'get', 
+		handler: function (req, res) {
+			console.log("REMOTE API user.read " + JSON.stringify(req.query));
+			readUser(req.query, function(err, user) {
+				debugger;
+				if (!err && user) {
+					res.json(200, user);	// Ok
+				} else {
+					res.json(404, { error: err });
+				}
+			});
+		}
+	}, {
+		name: 'create.json', 
+		method: 'put', 
+		handler: function (req, res) {
+			console.log("REMOTE API user.create " + JSON.stringify(req.body));
+			createUser(req.body, function(err, user) {
+				if (!err) {
+					res.json(201, user);	// Created
+				} else {
+					res.json(400, { error: err });
+				}
+			});
+		}
+	}, {
+		name: 'update.json', 
+		method: 'post', 
+		handler: function (req, res) {
+			console.log("REMOTE API user.update " + JSON.stringify(req.body));
+			updateUser(req.body, function(err, user) {
+				if (!err) {
+					res.json(200, user);	// Updated
+				} else {
+					res.json(400, { error: err });
+				}
+			});
+		}
+	}, {
+		name: 'delete.json', 
+		method: 'delete', 
+		handler: function (req, res) {
+			console.log("REMOTE API user.delete " + JSON.stringify(req.query));
+			deleteUser(req.query, function (err, user) {
+				if (!err) {
+					res.json(200, user);	// Deleted
+				} else {
+					res.json(400, { error: err });
+				}
+			});
+		}
 	}
-};
+];
 
 

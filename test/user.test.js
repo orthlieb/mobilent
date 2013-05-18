@@ -4,7 +4,7 @@ var noisy = true;
 var defaultOptions = {
 	host: 'localhost',
 	port: 8080,
-	path: '/api/user',
+	path: '/api/user/',
 	headers: {}
 };	
 
@@ -47,20 +47,22 @@ function testGeneric(options, data, callback) {
 	req.end();
 }
 
-function testPut(data, callback) {
+function testPut(path, data, callback) {
 	var d = JSON.stringify(data);
 	var options = clone(defaultOptions);
 	options.method = 'PUT';
+	options.path += path;
 	options.headers['Content-Length'] = d.length;
 	options.headers['Content-Type'] = 'application/json';
 
 	testGeneric(options, d, callback);
 }
 
-function testPost(data, callback) {
+function testPost(path, data, callback) {
 	var d = JSON.stringify(data);
 	var options = clone(defaultOptions);
 	options.method = 'POST';
+	options.path += path;
 	options.headers['Content-Length'] = d.length;
 	options.headers['Content-Type'] = 'application/json';
 
@@ -70,7 +72,7 @@ function testPost(data, callback) {
 function testGet(path, callback) {
 	var options = clone(defaultOptions);
 	options.method = 'GET';
-	options.path = path;
+	options.path += path;
 
 	testGeneric(options, null, callback);
 }
@@ -78,7 +80,7 @@ function testGet(path, callback) {
 function testDelete(path, callback) {
 	var options = clone(defaultOptions);
 	options.method = 'DELETE';
-	options.path = path;
+	options.path += path;
 
 	testGeneric(options, null, callback);
 }
@@ -90,7 +92,7 @@ var tests = [
 		var name = 'PUT (missing params)';
 		var data = { };
 		log(name, 'STARTING', true);
-		testPut(data, function(res, body) {
+		testPut('create.json', data, function(res, body) {
 			body = JSON.parse(body);
 			assert.equal(400, res.statusCode);
 			assert.equal(body.error, 'missing-parameter user: false email: false pass: false');
@@ -102,6 +104,7 @@ var tests = [
 	function (beforeExit, assert, callback) {
 		// Put 201 success
 		var name = 'PUT (201 success)';
+		var path = 'create.json';
 		var data = { 
 			user: 'test',
 			email: 'test@test.com',
@@ -110,7 +113,7 @@ var tests = [
 			pass: 'password'
 		};
 		log(name, 'STARTING', true);
-		testPut(data, function(res, body) {
+		testPut(path, data, function(res, body) {
 			body = JSON.parse(body);
 			assert.equal(201, res.statusCode);
 			log(name, 'SUCCESS', true);
@@ -121,13 +124,14 @@ var tests = [
 	function (beforeExit, assert, callback) {	
 		// Put fail 400 duplicate user name
 		var name = 'PUT (fail 400 duplicate user name)';
+		var path = 'create.json';
 		var data = { 
 			user: 'test',
 			email: 'test@test.com',
 			pass: 'password'
 		};
 		log(name, 'STARTING', true);
-		testPut(data, function(res, body) {
+		testPut(path, data, function(res, body) {
 			body = JSON.parse(body);
 			assert.equal(400, res.statusCode);
 			log(name, 'SUCCESS', true);
@@ -138,13 +142,14 @@ var tests = [
 	function (beforeExit, assert, callback) {	
 		// Put New user name fail 400 duplicate email
 		var name = 'PUT (New user name fail 400 duplicate email)';
+		var path = 'create.json';
 		var data = { 
 			user: 'test2',
 			email: 'test@test.com',
 			pass: 'password'
 		};
 		log(name, 'STARTING', true);
-		testPut(data, function(res, body) {
+		testPut(path, data, function(res, body) {
 			body = JSON.parse(body);
 			assert.equal(400, res.statusCode);
 			log(name, 'SUCCESS', true);
@@ -155,7 +160,7 @@ var tests = [
 	function (beforeExit, assert, callback) {	
 		// Get missing parameters conditions
 		var name = 'GET (missing params)';
-		var path = '/api/user';
+		var path = 'read.json';
 		log(name, 'STARTING', true);
 		testGet(path, function(res, body) {
         	assert.equal(404, res.statusCode);
@@ -167,7 +172,7 @@ var tests = [
 	function (beforeExit, assert, callback) {	
 		// Get 200 success and verify create
 		var name = 'GET (200 success and verify create)';
-		var path = '/api/user?user=test';
+		var path = 'read.json?user=test';
 		var data = { 
 			user: 'test',
 			email: 'test@test.com',
@@ -194,11 +199,28 @@ var tests = [
 	},
 
 	function (beforeExit, assert, callback) {
+		// Get manual login
+		var name = 'POST (manual login)';
+		var path = 'login.json';
+		var data = {
+			user: 'test',
+			pass: 'password'
+		};
+		log(name, 'STARTING', true);
+		testPost(path, data, function(res, body) {
+        	assert.equal(200, res.statusCode);
+			log(name, 'SUCCESS', true);
+			callback();
+		});
+	},
+
+	function (beforeExit, assert, callback) {
 		// Post missing params
 		var name = 'POST (missing params)';
+		var path = 'update.json';
 		var data = {};
 		log(name, 'STARTING', true);
-		testPost(data, function(res, body) {
+		testPost(path, data, function(res, body) {
 			body = JSON.parse(body);
 			assert.equal(400, res.statusCode);
 			log(name, 'SUCCESS', true);
@@ -209,12 +231,13 @@ var tests = [
 	function (beforeExit, assert, callback) {
 		// Post 200 successful
 		var name = 'POST (200 success)';
+		var path = 'update.json';
 		var data = {
 			user: 'test',
 			company: 'MobilEnt, Inc.'
 		};
 		log(name, 'STARTING', true);
-		testPost(data, function(res, body) {
+		testPost(path, data, function(res, body) {
 			body = JSON.parse(body);
 			assert.equal(200, res.statusCode);
 			log(name, 'SUCCESS', true);
@@ -223,9 +246,9 @@ var tests = [
 	},
 	
 	function (beforeExit, assert, callback) {	
-		// Get missing parameters conditions
+		// Get 200 success and validate company update
 		var name = 'GET (200 success and validate company update)';
-		var path = '/api/user?user=test';
+		var path = 'read.json?user=test';
 		var data = { 
 			company: 'MobilEnt, Inc.',
 		};		
@@ -245,7 +268,7 @@ var tests = [
 	function (beforeExit, assert, callback) {
 		// Delete missing params
 		var name = 'DELETE (missing params)';
-		var path = '/api/user';
+		var path = 'delete.json';
 		log(name, 'STARTING', true);
 		testDelete(path, function(res, body) {
 			assert.equal(400, res.statusCode);
@@ -257,7 +280,7 @@ var tests = [
 	function (beforeExit, assert, callback) {
 		// Delete 200 success
 		var name = 'DELETE (200 success)';
-		var path = '/api/user?user=test';
+		var path = 'delete.json?user=test';
 		log(name, 'STARTING', true);
 		testDelete(path, function(res, body) {
 			body = JSON.parse(body);
@@ -270,7 +293,7 @@ var tests = [
 	function (beforeExit, assert, callback) {	
 		// Get 404 cannot find deleted user
 		var name = 'GET (404 cannot find deleted user)';
-		var path = '/api/user?user=test';
+		var path = 'read.json?user=test';
 		log(name, 'STARTING', true);
 		testGet(path, function(res, body) {
         	assert.equal(404, res.statusCode);
@@ -278,7 +301,6 @@ var tests = [
 			callback();
 		});
 	},
-
 ];
 
 exports[suite] = function(beforeExit, assert) {

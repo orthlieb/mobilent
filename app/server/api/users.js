@@ -15,21 +15,25 @@ function getUsers(callback) {
 
 exports.name = "users";
 exports.local = {
-	get: getUsers,
+	read: getUsers,
 };
 
-exports.remote = {
-	get: function (req, res) {
-		console.log("REMOTE API users.get {" + JSON.stringify(req.param) + "}");
+exports.remote = [
+	{
+		name: 'read.json', 
+		method: 'get', 
+		handler: function (req, res) {
+			console.log("REMOTE API users.get {" + JSON.stringify(req.param) + "}");
 
-		getUsers(function(error, accounts) {
-			if (!error) {
-				res.json(200, accounts);
-			} else {
-				res.error(error);
-			}
-		});
+			getUsers(function(error, accounts) {
+				if (!error) {
+					res.json(200, accounts);
+				} else {
+					res.error(error);
+				}
+			});
+		}
 	}
-};
+];
 
 
