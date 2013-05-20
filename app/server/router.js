@@ -51,7 +51,7 @@ module.exports = function(app) {
 	app.post('/', function(req, res) {
 		// Manual login.
 		console.log("POST / {" + JSON.stringify(req.param) + "}");
-		api.user.manualLogin(req.param('user'), req.param('pass'), function(e, o) {
+		api.user.login({ user: req.param('user'), pass: req.param('pass') }, function(e, o) {
 			if (!o) {
 				res.send(e, 400);
 			} else {
@@ -84,7 +84,7 @@ module.exports = function(app) {
 	
 	app.post('/home', function(req, res){
 		if (req.param('user') != undefined) {
-			api.user.post({
+			api.user.update({
 				user 		: req.param('user'),
 				name 		: req.param('name'),
 				company 	: req.param('company'),
@@ -120,14 +120,15 @@ module.exports = function(app) {
 	
 	app.post('/signup', function(req, res){
 		console.log("POST signup {" + JSON.stringify(req.param) + "}");
-		api.user.put({
-			name 	: req.param('name'),
-			email 	: req.param('email'),
-			user 	: req.param('user'),
-			pass	: req.param('pass'),
-			country : req.param('country')
-		}, function(e){
-			if (e){
+		api.user.create({
+			user 		: req.param('user'),
+			name 		: req.param('name'),
+			company 	: req.param('company'),
+			email 		: req.param('email'),
+			country 	: req.param('country'),
+			pass		: req.param('pass')
+		}, function(e) {
+			if (e) {
 				res.send(e, 400);
 			} else {
 				res.send('ok', 200);
@@ -140,7 +141,7 @@ module.exports = function(app) {
 	app.post('/lost-password', function(req, res){
 		console.log("POST lost-password {" + JSON.stringify(req.param) + "}");
 	// look up the user's account via their email //
-		api.user.get({ email: req.param('email') }, function(o){
+		api.user.read({ email: req.param('email') }, function(o){
 			if (o){
 				res.send('ok', 200);
 				EM.dispatchResetPasswordLink(o, function(e, m){
@@ -181,7 +182,7 @@ module.exports = function(app) {
 		var email = req.session.reset.email;
 		// Destroy the session immediately after retrieving the stored email //
 		req.session.destroy();
-		api.user.post({ email: email, pass: pass }, function(e, o) {
+		api.user.update({ email: email, pass: pass }, function(e, o) {
 			if (o) {
 				res.send('ok', 200);
 			} else {
@@ -194,7 +195,7 @@ module.exports = function(app) {
 
 	app.get('/users', function(req, res) {
 		console.log("UI GET users {" + JSON.stringify(req.param) + "}");
-		api.users.get(function (error, data) {
+		api.users.read(function (error, data) {
 			res.render('print', { title : 'Account List', accts : data });
 		});		
 	});
@@ -203,7 +204,7 @@ module.exports = function(app) {
 	
 	app.post('/delete', function(req, res){
 		console.log("POST delete {" + JSON.stringify(req.param) + "}");
-		api.user.delete(req.body.id, function(e, obj) {
+		api.user.delete({ id: req.body.id }, function(e, obj) {
 			if (!e) {
 				res.clearCookie('user');
 				res.clearCookie('pass');

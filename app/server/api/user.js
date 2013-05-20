@@ -5,8 +5,9 @@ var moment = require('moment');
 var db = require('../modules/database-manager').db;
 var accounts = db.collection('accounts');
 var fields = {
-	create: [ "user", "email", "company", "country", "pass" ],
-	update: [ "user", "email", "company", "country", "pass" ]
+	read: [ "user", "name", "email", "company", "country", "created", "modified" ],
+	create: [ "user", "name", "email", "company", "country", "pass" ],
+	update: [ "user", "name", "email", "company", "country", "pass" ]
 };
 
 // Private encryption & validation methods
@@ -142,6 +143,9 @@ function updateUser(data, callback) {
 		_.extend(o, data);
 		if (data.pass)		// Update password as well.
 			o.pass = saltAndHash(data.pass);
+		else
+			delete o.pass;	// Make sure it doesn't get updated to null!
+			
 		// Append date stamp when the record was modified.	
 		o.modified = moment().format('YYYYMMDDHHmmssZ');
 	
