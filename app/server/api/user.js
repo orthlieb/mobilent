@@ -60,7 +60,6 @@ function autoLogin(user, pass, callback)
 function loginUser(data, callback)
 {
 	accounts.findOne({ user: data.user }, function(e, o) {
-		debugger;
 		if (!o) {
 			callback('user-not-found');
 		} else {
@@ -150,7 +149,6 @@ function updateUser(data, callback) {
 		o.modified = moment().format('YYYYMMDDHHmmssZ');
 	
 		accounts.save(o, {safe: true}, function (err, numberAffected, rawResponse) {
-			debugger;
 			if (err)
 				callback('save-error');
 			else
@@ -167,7 +165,6 @@ function deleteUser(conditions, callback) {
 	}
 
 	accounts.remove(conditions, function (err, numberAffected, rawResponse) {
-		debugger;
 		if (err)
 			callback('delete-error');
 		else
@@ -190,13 +187,14 @@ exports.remote = [
 	{
 		name: 'login.json', 
 		method: 'post', 
-		handler: function (req, res) {
+		handler: function (req, res, next) {
 			console.log("REMOTE API user.login " + JSON.stringify(req.body));
 			loginUser(req.body, function(err, user) {
 				if (!err) {
 					res.json(200, user);	// Ok
 				} else {
-					res.json(400, { error: err });
+					next(new Error(err));
+					// res.json(400, { error: err });
 				}
 			});
 		}
@@ -206,7 +204,6 @@ exports.remote = [
 		handler: function (req, res) {
 			console.log("REMOTE API user.read " + JSON.stringify(req.query));
 			readUser(req.query, function(err, user) {
-				debugger;
 				if (!err && user) {
 					res.json(200, user);	// Ok
 				} else {

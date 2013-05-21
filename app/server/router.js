@@ -17,7 +17,6 @@ for (var i = 0; i < handlers.length; i++) {
 
 module.exports = function(app) {
 	// Create the remote API handlers with the corresponding paths and methods.
-	debugger;
 	console.log("ROUTER: Creating remote handlers");
 	for (var i = 0; i < handlers.length; i++) {
 		var name = handlers[i].name;	// E.g. user
@@ -42,26 +41,28 @@ module.exports = function(app) {
 				    req.session.user = o;
 					res.redirect('/home');
 				} else {
-					res.render('login', { title: 'Please Login To Your Account' });
+					res.render('login');
 				}
 			});
 		}
 	});
 	
-	app.post('/', function(req, res) {
+	app.post('/', function(req, res, next) {
 		// Manual login.
 		console.log("POST / {" + JSON.stringify(req.param) + "}");
 		api.user.login({ user: req.param('user'), pass: req.param('pass') }, function(e, o) {
 			if (!o) {
-				res.send(e, 400);
+				var err = new Error(e);
+				err.status = 400;
+				next(err);				
 			} else {
 			    req.session.user = o;
 				if (req.param('remember-me') == 'true'){
 					res.cookie('user', o.user, { maxAge: 900000 });
 					res.cookie('pass', o.pass, { maxAge: 900000 });
 				}
-				res.redirect('/home');
-//				res.send(o, 200);
+//				res.redirect('/home');
+				res.send(o, 200);
 			}
 		});
 	});

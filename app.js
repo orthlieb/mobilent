@@ -22,11 +22,18 @@ app.configure(function(){
 	app.use(express.favicon(__dirname + '/app/public/img/favicon.ico'));
 });
 
-app.configure('development', function(){
-	app.use(express.errorHandler());
-});
+// app.configure('development', function(){
+// 	app.use(express.errorHandler());
+// });
 
 require('./app/server/router')(app);
+
+
+app.use(function(err, req, res, next){
+debugger;
+	console.error(err);
+	res.send(err.status, err); // err.status, err);
+});
 
 http.createServer(app).listen(app.get('port'), function(){
 	console.log("Express server listening on port " + app.get('port'));
