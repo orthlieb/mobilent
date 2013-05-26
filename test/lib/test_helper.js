@@ -1,7 +1,7 @@
 var noisy = false;
 
 var defaultOptions = {
-	host: 'localhost',
+	host: 'http://ec2-54-245-220-88.us-west-2.compute.amazonaws.com',
 	port: 8080,
 	path: '/api/',
 	headers: {}
