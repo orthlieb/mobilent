@@ -1,3 +1,9 @@
+/**
+User class: represents a users of the MobilEnt instance.
+
+@class user
+**/
+
 var _ = require("../vendor/underscore-min");
 var crypto = require('crypto');
 var moment = require('moment');
@@ -57,6 +63,39 @@ function autoLogin(user, pass, callback)
 	});
 }
 
+/**
+Logins in a user into the MobilEnt system. Has both a local (api.user.login) and a remote (api/user/login.json) version.
+
+Executes the supplied callback when the user has been logged in, passing a null error obect and the user object. 
+The user object is a JSON object containing the user record with user id, name, email, company, country, created, modified, and _id.
+
+On error, the callback error is non-null and contains one of the following 
+	'user-not-found'   (404)
+	'invalid-password' (400)
+@method login
+@example
+	POST http://mobilent.com/api/users/login.json
+@example
+	Body:
+	{
+		"user": "gollum",
+		"pass": "precious"
+	}
+@example
+	api.user.login({ user: "gollum", pass: "precious" });
+@example 
+	Returns:
+	{
+		"user": "gollum",
+		"name": "Gollum Smeagol",
+		"email": "gollum@mordor.com",
+		"company": "Independent Agent",
+		"country": "Mordor",
+		"created": "20130520142109-07:00",
+		"modified": "20130520142226-07:00",
+		"_id": "519a93c5da78cdb4a5000001"
+	}
+**/
 function loginUser(data, callback)
 {
 	accounts.findOne({ user: data.user }, function(e, o) {
@@ -79,6 +118,34 @@ function validateResetLink(email, passHash, callback)
 	});
 }
 
+/**
+Retrieves a user record from the MobilEnt system.
+
+Executes the supplied callback when the user located, passing a null error object and the user object. 
+The user object is a JSON object containing the user record with user id, name, email, company, country, created, modified, and _id.
+
+On error, the callback error is non-null and contains one of the following 
+	'missing-parameter' (400)
+	'user-not-found' (404)
+@method read
+@param conditions {Object} List of conditions to use to search for the user.
+@example
+	GET http://mobilent.com/api/user/read.json?user=gollum
+@example
+	api.user.read({ user: "gollum" }, function (err, obj) { alert(JSON.stringify(err ? err : obj)) });
+@example 
+	Returns:
+	{
+		"user": "gollum",
+		"name": "Gollum Smeagol",
+		"email": "gollum@mordor.com",
+		"company": "Independent Agent",
+		"country": "Mordor",
+		"created": "20130520142109-07:00",
+		"modified": "20130520142226-07:00",
+		"_id": "519a93c5da78cdb4a5000001"
+	}
+**/
 function readUser(conditions, callback) {
 	console.log("LOCAL API readUser: " + JSON.stringify(conditions));
 	if (!conditions || _.keys(conditions).length == 0)
@@ -87,6 +154,44 @@ function readUser(conditions, callback) {
 	accounts.findOne(conditions, callback);
 }
 
+/**
+Creates a new user record in the MobilEnt system.
+
+Executes the supplied callback when the user is created, passing a null error object and the user object. 
+The user object is a JSON object containing the user record with user id, name, email, company, country, created, modified, and _id.
+
+On error, the callback error is non-null and contains one of the following 
+	'missing-parameter' (400)
+	'username-taken' (400)
+	'email-taken' (400)
+	'insert-error' (400)
+@method create
+@param data {Object} User record to create. Note that at a minimum you must supply a user name, email, and password at a minimum.
+@example
+	PUT http://mobilent.com/api/user/create.json
+@example
+	Body:
+	{
+		"user": "gollum",
+		"email": "gollum@mordor.com",
+		"pass": "precious"
+	}
+@example
+	api.user.create({ user: "gollum", email: "gollum@mordor.com", pass: "precious" }, 
+		function (err, obj) { alert(JSON.stringify(err ? err : obj)) });
+@example 
+	Returns:
+	{
+		"user": "gollum",
+		"name": "Gollum Smeagol",
+		"email": "gollum@mordor.com",
+		"company": "Independent Agent",
+		"country": "Mordor",
+		"created": "20130520142109-07:00",
+		"modified": "20130520142226-07:00",
+		"_id": "519a93c5da78cdb4a5000001"
+	}
+**/
 function createUser(data, callback) {
 	console.log("LOCAL API createUser: " + JSON.stringify(data));
 	data = _.pick(data, fields.create);
@@ -124,6 +229,43 @@ function createUser(data, callback) {
 	});
 }
 
+/**
+Updates an existing user or creates a new user record in the MobilEnt system.
+
+Executes the supplied callback when the user is created, passing a null error object and the user object. 
+The user object is a JSON object containing the user record with user id, name, email, company, country, created, modified, and _id.
+
+On error, the callback error is non-null and contains one of the following 
+	'missing-parameter' (400)
+	'save-error' (400)
+@method update
+@param data {Object} User record to update. Note that you must supply a user name in order to locate at least one user. 
+	If you are creating a user, you must supply a user id, email, and password at a minimum.
+@example
+	POST http://mobilent.com/api/user/update.json
+@example
+	Body:
+	{
+		"user": "gollum",
+		"country": "Mordor",
+		"company": "Mordor Inc."
+	}
+@example
+	api.user.update({ user: "gollum", country: "Mordor", company: "Mordor Inc." },
+		function (err, obj) { alert(JSON.stringify(err ? err : obj)) });
+@example 
+	Returns:
+	{
+		"user": "gollum",
+		"name": "Gollum Smeagol",
+		"email": "gollum@mordor.com",
+		"company": "Independent Agent",
+		"country": "Mordor",
+		"created": "20130520142109-07:00",
+		"modified": "20130520142226-07:34",
+		"_id": "519a93c5da78cdb4a5000001"
+	}
+**/
 function updateUser(data, callback) {
 	console.log("LOCAL API updateUser: " + JSON.stringify(data));
 	data = _.pick(data, fields.update);
@@ -157,6 +299,40 @@ function updateUser(data, callback) {
 	});
 }
 
+/**
+Deletes an existing user in the MobilEnt system.
+
+Executes the supplied callback when the user is deleted, passing a null error object and the user object. 
+The user object is a JSON object containing the user record with user id, name, email, company, country, created, modified, and _id.
+
+On error, the callback error is non-null and contains one of the following 
+	'missing-parameter' (400)
+	'delete-error' (400)
+@method delete
+@param data {Object} User record to delete. Note that you must supply suffient conditions to locate at least one user. 
+@example
+	DELETE http://mobilent.com/api/user/delete.json
+@example
+	Body:
+	{
+		"user": "gollum",
+	}
+@example
+	api.user.delete({ user: "gollum" },
+		function (err, obj) { alert(JSON.stringify(err ? err : obj)) });
+@example 
+	Returns:
+	{
+		"user": "gollum",
+		"name": "Gollum Smeagol",
+		"email": "gollum@mordor.com",
+		"company": "Independent Agent",
+		"country": "Mordor",
+		"created": "20130520142109-07:00",
+		"modified": "20130520142226-07:00",
+		"_id": "519a93c5da78cdb4a5000001"
+	}
+**/
 function deleteUser(conditions, callback) {
 	console.log("LOCAL API deleteUser: " + JSON.stringify(conditions));
 	if (!conditions || _.keys(conditions).length == 0) {

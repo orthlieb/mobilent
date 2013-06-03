@@ -1,0 +1,12 @@
+{
+    "name": "The MobilEnt API",
+    "description": "MobilEnt is a world-class enterprise mobile backend as a service.",
+  	"logo": "assets/img/MEDocLogo.png",
+    "version": "0.1",
+    "url": "http://www.mobilent.com",
+    "options": {
+        "linkNatives": "true",	
+        "tabtospace": 4,
+        "outdir": "./public/docs"
+    }
+}

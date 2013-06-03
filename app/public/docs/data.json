@@ -1,0 +1,423 @@
+{
+    "project": {
+        "name": "The MobilEnt API",
+        "description": "MobilEnt is a world-class enterprise mobile backend as a service.",
+        "logo": "assets/img/MEDocLogo.png",
+        "version": "0.1",
+        "url": "http://www.mobilent.com"
+    },
+    "files": {
+        "public/vendor/jquery.form.js": {
+            "name": "public/vendor/jquery.form.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "server/api/reflect.js": {
+            "name": "server/api/reflect.js",
+            "modules": {},
+            "classes": {
+                "reflect": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "server/api/user.js": {
+            "name": "server/api/user.js",
+            "modules": {},
+            "classes": {
+                "user": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "server/api/users.js": {
+            "name": "server/api/users.js",
+            "modules": {},
+            "classes": {
+                "users": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {},
+    "classes": {
+        "reflect": {
+            "name": "reflect",
+            "shortname": "reflect",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "server/api/reflect.js",
+            "line": 4,
+            "description": "Reflection class for testing purposes."
+        },
+        "user": {
+            "name": "user",
+            "shortname": "user",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "server/api/user.js",
+            "line": 1,
+            "description": "User class: represents a users of the MobilEnt instance."
+        },
+        "users": {
+            "name": "users",
+            "shortname": "users",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "server/api/users.js",
+            "line": 1,
+            "description": "Users class: represents all users of the MobilEnt instance."
+        }
+    },
+    "classitems": [
+        {
+            "file": "public/vendor/jquery.form.js",
+            "line": 53,
+            "description": "Feature detection",
+            "class": "reflect"
+        },
+        {
+            "file": "public/vendor/jquery.form.js",
+            "line": 60,
+            "description": "ajaxSubmit() provides a mechanism for immediately submitting\nan HTML form using AJAX.",
+            "class": "reflect"
+        },
+        {
+            "file": "public/vendor/jquery.form.js",
+            "line": 664,
+            "description": "ajaxForm() provides a mechanism for fully automating form submission.\n\nThe advantages of using this method instead of ajaxSubmit() are:\n\n1: This method will include coordinates for <input type=\"image\" /> elements (if the element\n   is used to submit the form).\n2. This method will include the submit element's name/value data (for the element that was\n   used to submit the form).\n3. This method binds the submit() method to the form for you.\n\nThe options argument for ajaxForm works exactly as it does for ajaxSubmit.  ajaxForm merely\npasses the options argument along after properly binding events for submit elements and\nthe form itself.",
+            "class": "reflect"
+        },
+        {
+            "file": "public/vendor/jquery.form.js",
+            "line": 759,
+            "description": "formToArray() gathers form element data into an array of objects that can\nbe passed to any of the following ajax functions: $.get, $.post, or load.\nEach object in the array has both a 'name' and 'value' property.  An example of\nan array for a simple login form might be:\n\n[ { name: 'username', value: 'jresig' }, { name: 'password', value: 'secret' } ]\n\nIt is this array that is passed to pre-submit callback functions provided to the\najaxSubmit() and ajaxForm() methods.",
+            "class": "reflect"
+        },
+        {
+            "file": "public/vendor/jquery.form.js",
+            "line": 840,
+            "description": "Serializes form data into a 'submittable' string. This method will return a string\nin the format: name1=value1&amp;name2=value2",
+            "class": "reflect"
+        },
+        {
+            "file": "public/vendor/jquery.form.js",
+            "line": 849,
+            "description": "Serializes all field elements in the jQuery object into a query string.\nThis method will return a string in the format: name1=value1&amp;name2=value2",
+            "class": "reflect"
+        },
+        {
+            "file": "public/vendor/jquery.form.js",
+            "line": 874,
+            "description": "Returns the value(s) of the element in the matched set.  For example, consider the following form:\n\n <form><fieldset>\n     <input name=\"A\" type=\"text\" />\n     <input name=\"A\" type=\"text\" />\n     <input name=\"B\" type=\"checkbox\" value=\"B1\" />\n     <input name=\"B\" type=\"checkbox\" value=\"B2\"/>\n     <input name=\"C\" type=\"radio\" value=\"C1\" />\n     <input name=\"C\" type=\"radio\" value=\"C2\" />\n </fieldset></form>\n\n var v = $(':text').fieldValue();\n // if no values are entered into the text inputs\n v == ['','']\n // if values entered into the text inputs are 'foo' and 'bar'\n v == ['foo','bar']\n\n var v = $(':checkbox').fieldValue();\n // if neither checkbox is checked\n v === undefined\n // if both checkboxes are checked\n v == ['B1', 'B2']\n\n var v = $(':radio').fieldValue();\n // if neither radio is checked\n v === undefined\n // if first radio is checked\n v == ['C1']\n\nThe successful argument controls whether or not the field element must be 'successful'\n(per http://www.w3.org/TR/html4/interact/forms.html#successful-controls).\nThe default value of the successful argument is true.  If this value is false the value(s)\nfor each element is returned.\n\nNote: This method *always* returns an array.  If no valid value can be determined the\n   array will be empty, otherwise it will contain one or more values.",
+            "class": "reflect"
+        },
+        {
+            "file": "public/vendor/jquery.form.js",
+            "line": 927,
+            "description": "Returns the value of the field element.",
+            "class": "reflect"
+        },
+        {
+            "file": "public/vendor/jquery.form.js",
+            "line": 969,
+            "description": "Clears the form data.  Takes the following actions on the form's input fields:\n - input text fields will have their 'value' property set to the empty string\n - select elements will have their 'selectedIndex' property set to -1\n - checkbox and radio inputs will have their 'checked' property set to false\n - inputs of type submit, button, reset, and hidden will *not* be effected\n - button elements will *not* be effected",
+            "class": "reflect"
+        },
+        {
+            "file": "public/vendor/jquery.form.js",
+            "line": 983,
+            "description": "Clears the selected form elements.",
+            "class": "reflect"
+        },
+        {
+            "file": "public/vendor/jquery.form.js",
+            "line": 1011,
+            "description": "Resets the form data.  Causes all form elements to be reset to their original value.",
+            "class": "reflect"
+        },
+        {
+            "file": "public/vendor/jquery.form.js",
+            "line": 1024,
+            "description": "Enables or disables any matching elements.",
+            "class": "reflect"
+        },
+        {
+            "file": "public/vendor/jquery.form.js",
+            "line": 1036,
+            "description": "Checks/unchecks any matching checkboxes or radio buttons and\nselects/deselects and matching option elements.",
+            "class": "reflect"
+        },
+        {
+            "file": "server/api/reflect.js",
+            "line": 13,
+            "description": "Reflection handler for HTTP GET get.json.",
+            "itemtype": "method",
+            "name": "get.json",
+            "params": [
+                {
+                    "name": "various",
+                    "description": "Any number of parameters that will be reflected to the user.",
+                    "type": "Any"
+                }
+            ],
+            "return": {
+                "description": "JSON object containing the parameters passed in.",
+                "type": "Object"
+            },
+            "example": [
+                "\n\thttp://noblecall.orthlieb.com/api/reflect/get.json/?foo=bar&baz=quum",
+                " \n\t{\n\t\t\"foo\": \"bar\",\n\t\t\"baz\": \"quum\"\n\t}"
+            ],
+            "class": "reflect"
+        },
+        {
+            "file": "server/api/reflect.js",
+            "line": 34,
+            "description": "Reflection handler for HTTP PUT put.json.",
+            "itemtype": "method",
+            "name": "put.json",
+            "params": [
+                {
+                    "name": "body",
+                    "description": "Body can contain any valid JSON data.",
+                    "type": "Various"
+                }
+            ],
+            "return": {
+                "description": "JSON object containing the body passed in.",
+                "type": "Object"
+            },
+            "example": [
+                "\n\thttp://noblecall.orthlieb.com/api/reflect/put.json\n\tbody: {\n\t\t\"foo\": \"bar\",\n\t\t\"baz\": \"quum\"\n\t}",
+                " \n\t{\n\t\t\"foo\": \"bar\",\n\t\t\"baz\": \"quum\"\n\t}"
+            ],
+            "class": "reflect"
+        },
+        {
+            "file": "server/api/reflect.js",
+            "line": 59,
+            "description": "Reflection handler for HTTP POST post.json.",
+            "itemtype": "method",
+            "name": "post.json",
+            "params": [
+                {
+                    "name": "body",
+                    "description": "Body can contain any valid JSON data.",
+                    "type": "Various"
+                }
+            ],
+            "return": {
+                "description": "JSON object containing the body passed in.",
+                "type": "Object"
+            },
+            "example": [
+                "\n\thttp://noblecall.orthlieb.com/api/reflect/post.json\n\tbody: {\n\t\t\"foo\": \"bar\",\n\t\t\"baz\": \"quum\"\n\t}",
+                " \n\t{\n\t\t\"foo\": \"bar\",\n\t\t\"baz\": \"quum\"\n\t}"
+            ],
+            "class": "reflect"
+        },
+        {
+            "file": "server/api/reflect.js",
+            "line": 84,
+            "description": "Reflection handler for HTTP DELETE delete.json.",
+            "itemtype": "method",
+            "name": "delete.json",
+            "params": [
+                {
+                    "name": "various",
+                    "description": "Any number of parameters that will be reflected to the user.",
+                    "type": "Any"
+                }
+            ],
+            "return": {
+                "description": "JSON object containing the parameters passed in.",
+                "type": "Object"
+            },
+            "example": [
+                "\n\thttp://noblecall.orthlieb.com/api/reflect/delete.json/?foo=bar&baz=quum",
+                " \n\t{\n\t\t\"foo\": \"bar\",\n\t\t\"baz\": \"quum\"\n\t}"
+            ],
+            "class": "reflect"
+        },
+        {
+            "file": "server/api/user.js",
+            "line": 66,
+            "description": "Logins in a user into the MobilEnt system. Has both a local (api.user.login) and a remote (api/user/login.json) version.\n\nExecutes the supplied callback when the user has been logged in, passing a null error obect and the user object. \nThe user object is a JSON object containing the user record with user id, name, email, company, country, created, modified, and _id.\n\nOn error, the callback error is non-null and contains one of the following \n\t'user-not-found'   (404)\n\t'invalid-password' (400)",
+            "itemtype": "method",
+            "name": "login",
+            "example": [
+                "\n\tPOST http://mobilent.com/api/users/login.json",
+                "\n\tBody:\n\t{\n\t\t\"user\": \"gollum\",\n\t\t\"pass\": \"precious\"\n\t}",
+                "\n\tapi.user.login({ user: \"gollum\", pass: \"precious\" });",
+                " \n\tReturns:\n\t{\n\t\t\"user\": \"gollum\",\n\t\t\"name\": \"Gollum Smeagol\",\n\t\t\"email\": \"gollum@mordor.com\",\n\t\t\"company\": \"Independent Agent\",\n\t\t\"country\": \"Mordor\",\n\t\t\"created\": \"20130520142109-07:00\",\n\t\t\"modified\": \"20130520142226-07:00\",\n\t\t\"_id\": \"519a93c5da78cdb4a5000001\"\n\t}"
+            ],
+            "class": "user"
+        },
+        {
+            "file": "server/api/user.js",
+            "line": 121,
+            "description": "Retrieves a user record from the MobilEnt system.\n\nExecutes the supplied callback when the user located, passing a null error object and the user object. \nThe user object is a JSON object containing the user record with user id, name, email, company, country, created, modified, and _id.\n\nOn error, the callback error is non-null and contains one of the following \n\t'missing-parameter' (400)\n\t'user-not-found' (404)",
+            "itemtype": "method",
+            "name": "read",
+            "params": [
+                {
+                    "name": "conditions",
+                    "description": "List of conditions to use to search for the user.",
+                    "type": "Object"
+                }
+            ],
+            "example": [
+                "\n\tGET http://mobilent.com/api/user/read.json?user=gollum",
+                "\n\tapi.user.read({ user: \"gollum\" }, function (err, obj) { alert(JSON.stringify(err ? err : obj)) });",
+                " \n\tReturns:\n\t{\n\t\t\"user\": \"gollum\",\n\t\t\"name\": \"Gollum Smeagol\",\n\t\t\"email\": \"gollum@mordor.com\",\n\t\t\"company\": \"Independent Agent\",\n\t\t\"country\": \"Mordor\",\n\t\t\"created\": \"20130520142109-07:00\",\n\t\t\"modified\": \"20130520142226-07:00\",\n\t\t\"_id\": \"519a93c5da78cdb4a5000001\"\n\t}"
+            ],
+            "class": "user"
+        },
+        {
+            "file": "server/api/user.js",
+            "line": 157,
+            "description": "Creates a new user record in the MobilEnt system.\n\nExecutes the supplied callback when the user is created, passing a null error object and the user object. \nThe user object is a JSON object containing the user record with user id, name, email, company, country, created, modified, and _id.\n\nOn error, the callback error is non-null and contains one of the following \n\t'missing-parameter' (400)\n\t'username-taken' (400)\n\t'email-taken' (400)\n\t'insert-error' (400)",
+            "itemtype": "method",
+            "name": "create",
+            "params": [
+                {
+                    "name": "data",
+                    "description": "User record to create. Note that at a minimum you must supply a user name, email, and password at a minimum.",
+                    "type": "Object"
+                }
+            ],
+            "example": [
+                "\n\tPUT http://mobilent.com/api/user/create.json",
+                "\n\tBody:\n\t{\n\t\t\"user\": \"gollum\",\n\t\t\"email\": \"gollum@mordor.com\",\n\t\t\"pass\": \"precious\"\n\t}",
+                "\n\tapi.user.create({ user: \"gollum\", email: \"gollum@mordor.com\", pass: \"precious\" }, \n\t\tfunction (err, obj) { alert(JSON.stringify(err ? err : obj)) });",
+                " \n\tReturns:\n\t{\n\t\t\"user\": \"gollum\",\n\t\t\"name\": \"Gollum Smeagol\",\n\t\t\"email\": \"gollum@mordor.com\",\n\t\t\"company\": \"Independent Agent\",\n\t\t\"country\": \"Mordor\",\n\t\t\"created\": \"20130520142109-07:00\",\n\t\t\"modified\": \"20130520142226-07:00\",\n\t\t\"_id\": \"519a93c5da78cdb4a5000001\"\n\t}"
+            ],
+            "class": "user"
+        },
+        {
+            "file": "server/api/user.js",
+            "line": 232,
+            "description": "Updates an existing user or creates a new user record in the MobilEnt system.\n\nExecutes the supplied callback when the user is created, passing a null error object and the user object. \nThe user object is a JSON object containing the user record with user id, name, email, company, country, created, modified, and _id.\n\nOn error, the callback error is non-null and contains one of the following \n\t'missing-parameter' (400)\n\t'save-error' (400)",
+            "itemtype": "method",
+            "name": "update",
+            "params": [
+                {
+                    "name": "data",
+                    "description": "User record to update. Note that you must supply a user name in order to locate at least one user. \n\tIf you are creating a user, you must supply a user id, email, and password at a minimum.",
+                    "type": "Object"
+                }
+            ],
+            "example": [
+                "\n\tPOST http://mobilent.com/api/user/update.json",
+                "\n\tBody:\n\t{\n\t\t\"user\": \"gollum\",\n\t\t\"country\": \"Mordor\",\n\t\t\"company\": \"Mordor Inc.\"\n\t}",
+                "\n\tapi.user.update({ user: \"gollum\", country: \"Mordor\", company: \"Mordor Inc.\" },\n\t\tfunction (err, obj) { alert(JSON.stringify(err ? err : obj)) });",
+                " \n\tReturns:\n\t{\n\t\t\"user\": \"gollum\",\n\t\t\"name\": \"Gollum Smeagol\",\n\t\t\"email\": \"gollum@mordor.com\",\n\t\t\"company\": \"Independent Agent\",\n\t\t\"country\": \"Mordor\",\n\t\t\"created\": \"20130520142109-07:00\",\n\t\t\"modified\": \"20130520142226-07:34\",\n\t\t\"_id\": \"519a93c5da78cdb4a5000001\"\n\t}"
+            ],
+            "class": "user"
+        },
+        {
+            "file": "server/api/user.js",
+            "line": 302,
+            "description": "Deletes an existing user in the MobilEnt system.\n\nExecutes the supplied callback when the user is deleted, passing a null error object and the user object. \nThe user object is a JSON object containing the user record with user id, name, email, company, country, created, modified, and _id.\n\nOn error, the callback error is non-null and contains one of the following \n\t'missing-parameter' (400)\n\t'delete-error' (400)",
+            "itemtype": "method",
+            "name": "delete",
+            "params": [
+                {
+                    "name": "data",
+                    "description": "User record to delete. Note that you must supply suffient conditions to locate at least one user.",
+                    "type": "Object"
+                }
+            ],
+            "example": [
+                "\n\tDELETE http://mobilent.com/api/user/delete.json",
+                "\n\tBody:\n\t{\n\t\t\"user\": \"gollum\",\n\t}",
+                "\n\tapi.user.delete({ user: \"gollum\" },\n\t\tfunction (err, obj) { alert(JSON.stringify(err ? err : obj)) });",
+                " \n\tReturns:\n\t{\n\t\t\"user\": \"gollum\",\n\t\t\"name\": \"Gollum Smeagol\",\n\t\t\"email\": \"gollum@mordor.com\",\n\t\t\"company\": \"Independent Agent\",\n\t\t\"country\": \"Mordor\",\n\t\t\"created\": \"20130520142109-07:00\",\n\t\t\"modified\": \"20130520142226-07:00\",\n\t\t\"_id\": \"519a93c5da78cdb4a5000001\"\n\t}"
+            ],
+            "class": "user"
+        },
+        {
+            "file": "server/api/users.js",
+            "line": 12,
+            "description": "Gets all users. Has both a local (api.users.get) and a remote (api/users/read.json) version.",
+            "itemtype": "method",
+            "name": "read",
+            "return": {
+                "description": "JSON object containing the user records with user id, name, email, company, country, created, modified, and _id.",
+                "type": "Array"
+            },
+            "example": [
+                "\n\tGET http://mobilent.com/api/users/read.json",
+                " \n\tReturns:\n\t[\n\t\t{\n\t\t\t\"user\": \"gollum\",\n\t\t\t\"name\": \"Gollum Smeagol\",\n\t\t\t\"email\": \"gollum@mordor.com\",\n\t\t\t\"company\": \"Independent Agent\",\n\t\t\t\"country\": \"Mordor\",\n\t\t\t\"created\": \"20130520142109-07:00\",\n\t\t\t\"modified\": \"20130520142226-07:00\",\n\t\t\t\"_id\": \"519a93c5da78cdb4a5000001\"\n\t\t},\n\t\t{\n\t\t\t\"user\": \"frodo\",\n\t\t\t\"name\": \"Frodo Baggins\",\n\t\t\t\"email\": \"frodo@baggins.com\",\n\t\t\t\"company\": \"Underhill Inc.\",\n\t\t\t\"country\": \"The Shire\",\n\t\t\t\"created\": \"20130521152255-07:00\",\n\t\t\t\"modified\": \"20130521160842-07:00\",\n\t\t\t\"_id\": \"519bf3bf3cac4d66b8000001\"\n\t\t}\n\t]"
+            ],
+            "class": "users"
+        }
+    ],
+    "warnings": [
+        {
+            "message": "Missing item type\nFeature detection",
+            "line": " public/vendor/jquery.form.js:53"
+        },
+        {
+            "message": "Missing item type\najaxSubmit() provides a mechanism for immediately submitting\nan HTML form using AJAX.",
+            "line": " public/vendor/jquery.form.js:60"
+        },
+        {
+            "message": "Missing item type\najaxForm() provides a mechanism for fully automating form submission.\n\nThe advantages of using this method instead of ajaxSubmit() are:\n\n1: This method will include coordinates for <input type=\"image\" /> elements (if the element\n   is used to submit the form).\n2. This method will include the submit element's name/value data (for the element that was\n   used to submit the form).\n3. This method binds the submit() method to the form for you.\n\nThe options argument for ajaxForm works exactly as it does for ajaxSubmit.  ajaxForm merely\npasses the options argument along after properly binding events for submit elements and\nthe form itself.",
+            "line": " public/vendor/jquery.form.js:664"
+        },
+        {
+            "message": "Missing item type\nformToArray() gathers form element data into an array of objects that can\nbe passed to any of the following ajax functions: $.get, $.post, or load.\nEach object in the array has both a 'name' and 'value' property.  An example of\nan array for a simple login form might be:\n\n[ { name: 'username', value: 'jresig' }, { name: 'password', value: 'secret' } ]\n\nIt is this array that is passed to pre-submit callback functions provided to the\najaxSubmit() and ajaxForm() methods.",
+            "line": " public/vendor/jquery.form.js:759"
+        },
+        {
+            "message": "Missing item type\nSerializes form data into a 'submittable' string. This method will return a string\nin the format: name1=value1&amp;name2=value2",
+            "line": " public/vendor/jquery.form.js:840"
+        },
+        {
+            "message": "Missing item type\nSerializes all field elements in the jQuery object into a query string.\nThis method will return a string in the format: name1=value1&amp;name2=value2",
+            "line": " public/vendor/jquery.form.js:849"
+        },
+        {
+            "message": "Missing item type\nReturns the value(s) of the element in the matched set.  For example, consider the following form:\n\n <form><fieldset>\n     <input name=\"A\" type=\"text\" />\n     <input name=\"A\" type=\"text\" />\n     <input name=\"B\" type=\"checkbox\" value=\"B1\" />\n     <input name=\"B\" type=\"checkbox\" value=\"B2\"/>\n     <input name=\"C\" type=\"radio\" value=\"C1\" />\n     <input name=\"C\" type=\"radio\" value=\"C2\" />\n </fieldset></form>\n\n var v = $(':text').fieldValue();\n // if no values are entered into the text inputs\n v == ['','']\n // if values entered into the text inputs are 'foo' and 'bar'\n v == ['foo','bar']\n\n var v = $(':checkbox').fieldValue();\n // if neither checkbox is checked\n v === undefined\n // if both checkboxes are checked\n v == ['B1', 'B2']\n\n var v = $(':radio').fieldValue();\n // if neither radio is checked\n v === undefined\n // if first radio is checked\n v == ['C1']\n\nThe successful argument controls whether or not the field element must be 'successful'\n(per http://www.w3.org/TR/html4/interact/forms.html#successful-controls).\nThe default value of the successful argument is true.  If this value is false the value(s)\nfor each element is returned.\n\nNote: This method *always* returns an array.  If no valid value can be determined the\n   array will be empty, otherwise it will contain one or more values.",
+            "line": " public/vendor/jquery.form.js:874"
+        },
+        {
+            "message": "Missing item type\nReturns the value of the field element.",
+            "line": " public/vendor/jquery.form.js:927"
+        },
+        {
+            "message": "Missing item type\nClears the form data.  Takes the following actions on the form's input fields:\n - input text fields will have their 'value' property set to the empty string\n - select elements will have their 'selectedIndex' property set to -1\n - checkbox and radio inputs will have their 'checked' property set to false\n - inputs of type submit, button, reset, and hidden will *not* be effected\n - button elements will *not* be effected",
+            "line": " public/vendor/jquery.form.js:969"
+        },
+        {
+            "message": "Missing item type\nClears the selected form elements.",
+            "line": " public/vendor/jquery.form.js:983"
+        },
+        {
+            "message": "Missing item type\nResets the form data.  Causes all form elements to be reset to their original value.",
+            "line": " public/vendor/jquery.form.js:1011"
+        },
+        {
+            "message": "Missing item type\nEnables or disables any matching elements.",
+            "line": " public/vendor/jquery.form.js:1024"
+        },
+        {
+            "message": "Missing item type\nChecks/unchecks any matching checkboxes or radio buttons and\nselects/deselects and matching option elements.",
+            "line": " public/vendor/jquery.form.js:1036"
+        }
+    ]
+}
